@@ -52,7 +52,8 @@ Here is a snapshot of how the overview looks in Lovelace (example given in Danis
   <img src="https://github.com/MSkeem/CellarTracker-for-Home-Assistant/blob/main/img/overview.PNG" alt="Lovelace overview" width="100%"/>
 </p>
 
-You can also view individual wine lists using the flex-table feature in a Lovelace sub-view. To enable this, add the content of the `lovelace.yaml` file from this repository to your own `lovelace.yaml` file.
+From the overview you can also view individual wine lists using the flex-table feature in a Lovelace sub-view.
+To enable the overview and detailed view, add the content of the `ui-lovelace.yaml` file from this repository to your own `ui-lovelace.yaml` file.
 
 Here is an example of a sub-view, e.g., when pressing the "White wine" icon:
 
@@ -72,6 +73,6 @@ This integration relies on the following custom components. These can be install
 <i>Please note that the component updates every two hours. To avoid violating CellarTracker's regulations, do not set this frequency lower than once per hour.</i>
 
 ## Disclaimer:
-This integration for CellarTracker with Home Assistant is unofficial. The developer and contributors are in no way affiliated with CellarTracker! LLC. 
+This integration for CellarTracker with Home Assistant is unofficial. The developer is in no way affiliated with CellarTracker! LLC. 
 
 "CellarTracker!" is a registered trademark of CellarTracker! LLC.
