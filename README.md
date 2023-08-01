@@ -1,5 +1,10 @@
 # CellarTracker Integration for Home Assistant
 
+<p align="center">
+  <img src="./img/ct_logo.png" alt="CellarTracker logo" width="25%"/>
+</p>
+
+
 This custom integration enables you to import your wine collections from CellarTracker into Home Assistant.
 
 The integration generates the following entities which represent categories of wine rather than individual bottles:
@@ -44,3 +49,9 @@ This integration depends on the following custom components, which can be instal
 - `flex-table`: [GitHub](https://github.com/custom-cards/flex-table-card)
 
 <i>The component updates every second hour - do not set this lower than every hour, to avoid compromising CellarTracker regulation.</i>
+
+
+## Disclaimer:
+This is an unofficial integration of Cellar Tracker for Home Assistant, the developer and the contributors are not, in any way, affiliated to CellarTracker! LLC.
+
+"CellarTracker!" is a trademark of CellarTracker! LLC
