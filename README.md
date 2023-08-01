@@ -1,35 +1,37 @@
-# CellarTracker-for-Home-Assistant
-With this custom component you will be able to get your wines from CellarTracker into Home Assistant.<br>
-<br>
-The component will make the following entities (and not individual entities for each bottle):<br>
-CT_red: contains a list of all red wine and a total number of bottles<br>
-CT_white: contains a list of all white wine and a total number of bottles<br>
-CT_rose: contains a list of all rosé wine and a total number of bottles<br>
-CT_sparkling: contains a list of all sparkling wine and a total number of bottles<br>
-CT_fortified: contains a list of all fortified wine and a total number of bottles<br>
-CT_other: contains a list of all other wines/spirits/beer etc. and the total number of bottles<br>
-CT_total: contains the total number of bottles, the total price and the average price pr. bottle<br>
-<br>
-**Installation:**    
-<br>
-Add the following to your **configuration.yaml**and ensure that your cellartracker username and password are added in the <b>secrets.yaml</b> file:  
+# CellarTracker Integration for Home Assistant
 
-sensor:<br>
+This custom integration enables you to import your wine collections from CellarTracker into Home Assistant.
+
+The integration generates the following entities which represent categories of wine rather than individual bottles:
+- `CT_red`: Contains a list of all red wines and their total bottle count.
+- `CT_white`: Contains a list of all white wines and their total bottle count.
+- `CT_rose`: Contains a list of all rosé wines and their total bottle count.
+- `CT_sparkling`: Contains a list of all sparkling wines and their total bottle count.
+- `CT_fortified`: Contains a list of all fortified wines and their total bottle count.
+- `CT_other`: Contains a list of all other alcoholic beverages like spirits and beer, and their total bottle count.
+- `CT_total`: Contains the total number of bottles, their combined price and the average price per bottle.
+
+## Installation:
+
+To install this integration, add the following to your `configuration.yaml` file, ensuring your CellarTracker username and password are correctly entered in the `secrets.yaml` file:
+
+```yaml
+sensor:
   - platform: CT_winelist  
     username: !secret CT_winelist_username  
     password: !secret CT_winelist_password  
-<br>
-<b>Custom component folder:</b><br>  
-Add the <b>CT_winelist</b> folder from this repository to your custom_component folder.<br>
-<br>
-<b>Lovelace:</b><br>
-The individual winelist is done using flex-table and viewed in a lovelace-subview.<br>
-Add the <b>lovelace.yaml</b> content to your lovelace.yaml file.<br>
-<br>
-Graphics used in the overview, should be put in a folder called <b>CT_winelist_gfx</b> in the www-folder. Note: the graphics is white and requires a dark background.<br>
-<br>
-<b>Prereqs</b> for this is the following custom components which can be installed through HACS Frontend:<br>
-<b>vertical-stack-in-card</b> - https://github.com/ofekashery/vertical-stack-in-card<br>
-<b>layout-card</b> - https://github.com/thomasloven/lovelace-layout-card<br>
-<b>flex-table</b> - https://github.com/custom-cards/flex-table-card<br>
+```
+Next, download the `CT_winelist` directory from this repository and add it to your `custom_component` directory in Home Assistant.
 
+## Customizing Lovelace:
+
+You can view individual wine lists using the flex-table feature in a Lovelace sub-view. To enable this, add the contents of the `lovelace.yaml` file from this repository to your own `lovelace.yaml` file.
+
+For the graphics used in the overview, place them in a directory named `CT_winelist_gfx` within the www-folder. Please note, the graphics are designed for dark backgrounds due to their white color scheme.
+
+## Prerequisites:
+
+This integration depends on the following custom components, which can be installed via the HACS Frontend:
+- `vertical-stack-in-card`: [GitHub](https://github.com/ofekashery/vertical-stack-in-card)
+- `layout-card`: [GitHub](https://github.com/thomasloven/lovelace-layout-card)
+- `flex-table`: [GitHub](https://github.com/custom-cards/flex-table-card)
