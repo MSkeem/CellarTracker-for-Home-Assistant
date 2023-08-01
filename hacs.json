@@ -1,0 +1,7 @@
+{
+  "name": "Cellar Tracker, Winelist for Home Assistant",
+  "render_readme": true,
+  "domain": "CT_winelist",
+  "documentation": "https://github.com/MSkeem/CellarTracker-for-Home-Assistant",
+  "issue_tracker": "https://github.com/MSkeem/CellarTracker-for-Home-Assistant/issues",
+}  
