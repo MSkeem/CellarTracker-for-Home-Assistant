@@ -28,7 +28,7 @@ Category: Integration<br>
 Download the `CT_winelist` directory from this repository and place it in your `custom_component` directory in Home Assistant.<br>
 
 **2. Final Step:**<br>
-Post completion of either 1.a. or 1.b., <b>restart Home Assistant</b> and add the following snippet to your `configuration.yaml` file (or in your sensor.yaml file):
+Post completion of either 1.a. or 1.b., <b>restart Home Assistant</b> and add the following snippet to your `configuration.yaml` file (or in your `sensor.yaml` file):
 
 ```yaml
 sensor:
