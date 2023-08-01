@@ -39,7 +39,7 @@ Ensure your CellarTracker username and password are correctly entered in the `se
 The overview in Lovelace looks like this (Danish):
 
 <p align="center">
-  <img src="./img/overview.PNG" alt="Lovelace overview" width="100%"/>
+  <img src="https://github.com/MSkeem/CellarTracker-for-Home-Assistant/blob/main/img/overview.PNG" alt="Lovelace overview" width="100%"/>
 </p>
 
 
@@ -47,7 +47,7 @@ You can view individual wine lists using the flex-table feature in a Lovelace su
 
 Example of a sub-view e.g. when pressing the "White wine" icon:
 <p align="center">
-  <img src="./img/subview.PNG" alt="Lovelace subview" width="100%"/>
+  <img src="https://github.com/MSkeem/CellarTracker-for-Home-Assistant/blob/main/img/subview.PNG" alt="Lovelace subview" width="100%"/>
 </p>
 
 
