@@ -1,5 +1,5 @@
 # Home Assistant Integration for CellarTracker 
-
+[![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg?style=for-the-badge)](https://github.com/hacs/integration)
 <p align="center">
   <img src="https://github.com/MSkeem/CellarTracker-for-Home-Assistant/blob/main/img/ct_logo.png" alt="CellarTracker logo" width="25%"/>
 </p>
