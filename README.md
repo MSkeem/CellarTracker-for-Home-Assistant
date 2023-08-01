@@ -31,8 +31,7 @@ Download the `CT_winelist` directory from this repository and place it in your `
 Post completion of either 1.a. or 1.b., <b>restart Home Assistant</b> and add the following snippet to your `configuration.yaml` file:
 
 ```yaml
-sensor:
-  - platform: CT_winelist  
+CT_winelist:  
     username: !secret CT_winelist_username  
     password: !secret CT_winelist_password  
 ```
