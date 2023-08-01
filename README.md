@@ -1,7 +1,7 @@
 # CellarTracker Integration for Home Assistant
 
 <p align="center">
-  <img src="./img/ct_logo.png" alt="CellarTracker logo" width="25%"/>
+  <img src="https://github.com/MSkeem/CellarTracker-for-Home-Assistant/blob/main/img/ct_logo.png" alt="CellarTracker logo" width="25%"/>
 </p>
 
 
