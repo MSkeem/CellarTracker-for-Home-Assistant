@@ -1,7 +1,7 @@
 # CellarTracker-for-Home-Assistant
 With this custom component you will be able to get your wines from CellarTracker into Home Assistant.<br>
 <br>
-THe component will make the following entities (and not individual entities for each bottle):<br>
+The component will make the following entities (and not individual entities for each bottle):<br>
 CT_red: contains a list of all red wine and a total number of bottles<br>
 CT_white: contains a list of all white wine and a total number of bottles<br>
 CT_rose: contains a list of all rosé wine and a total number of bottles<br>
