@@ -38,3 +38,5 @@ This integration depends on the following custom components, which can be instal
 - `vertical-stack-in-card`: [GitHub](https://github.com/ofekashery/vertical-stack-in-card)
 - `layout-card`: [GitHub](https://github.com/thomasloven/lovelace-layout-card)
 - `flex-table`: [GitHub](https://github.com/custom-cards/flex-table-card)
+
+<i>The component updates every second hour - do not set this lower than every hour, to avoid compromising CellarTracker regulation.</i>
