@@ -35,9 +35,21 @@ Ensure your CellarTracker username and password are correctly entered in the `se
 <br>
 <b>Restart home assistant.</b>
 
-## Customizing Lovelace:
+## Lovelace:
+The overview in Lovelace looks like this (Danish):
+
+<p align="center">
+  <img src="./img/overview.PNG" alt="Lovelace overview" width="100%"/>
+</p>
+
 
 You can view individual wine lists using the flex-table feature in a Lovelace sub-view. To enable this, add the contents of the `lovelace.yaml` file from this repository to your own `lovelace.yaml` file.
+
+Example of a sub-view e.g. when pressing the "White wine" icon:
+<p align="center">
+  <img src="./img/subview.PNG" alt="Lovelace subview" width="100%"/>
+</p>
+
 
 For the graphics used in the overview, place them in a directory named `CT_winelist_gfx` within the www-folder. Please note, the graphics are designed for dark backgrounds due to their white color scheme.
 
