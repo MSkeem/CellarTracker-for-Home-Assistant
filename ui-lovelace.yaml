@@ -1,0 +1,354 @@
+title: Cellartracker
+views:
+  - title: Vin
+    icon: mdi:glass-wine #mdi:bottle-wine
+    panel: true
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: >
+              <table width="100%">
+              <tr><td><font size="5"><center>Vin, øl og spiritus. {{states("sensor.ct_total")}} flasker ialt.<br><br>
+              Samlet værdi: kr {{ state_attr('sensor.ct_total', 'Total Price') }},-&nbsp;&nbsp;&nbsp; Gennemsnitspris: kr {{ state_attr('sensor.ct_total', 'Average Price') }},-</center></font></td></tr>
+              </table>
+
+          - type: custom:layout-card
+            layout_type: custom:grid-layout
+            layout:
+              grid-template-columns: auto 210px 210px 210px auto
+              grid-template-rows: auto
+              grid-template-gap: 25px
+              max_cols: 5
+            cards:
+              - type: custom:gap-card
+
+              - type: custom:vertical-stack-in-card
+                #title: My Card
+                cards:
+                  - type: picture
+                    image: /local/CT_winelist_gfx/rodvin.png
+                    tap_action:
+                      action: navigate
+                      navigation_path: /lovelace/redwine/
+                  - type: markdown
+                    content: >
+                      <table width="100%">
+                      <tr><td><font size="5"><center>{{states("sensor.ct_red")}} flasker</center></font></td></tr>
+                      </table>
+
+              - type: custom:vertical-stack-in-card
+                #title: My Card
+                cards:
+                  - type: picture
+                    image: /local/CT_winelist_gfx/hvidvin.png
+                    tap_action:
+                      action: navigate
+                      navigation_path: /lovelace/whitewine/
+                  - type: markdown
+                    content: >
+                      <table width="100%">
+                      <tr><td><font size="5"><center>{{states("sensor.ct_white")}} flasker</center></font></td></tr>
+                      </table>
+
+              - type: custom:vertical-stack-in-card
+                #title: My Card
+                cards:
+                  - type: picture
+                    image: /local/CT_winelist_gfx/rosevin.png
+                    tap_action:
+                      action: navigate
+                      navigation_path: /lovelace/rosewine/
+                  - type: markdown
+                    content: >
+                      <table width="100%">
+                      <tr><td><font size="5"><center>{{states("sensor.ct_rose")}} flasker</center></font></td></tr>
+                      </table>
+
+              - type: custom:gap-card
+
+              - type: custom:gap-card
+
+              - type: custom:vertical-stack-in-card
+                #title: My Card
+                cards:
+                  - type: picture
+                    image: /local/CT_winelist_gfx/mousserende.png
+                    tap_action:
+                      action: navigate
+                      navigation_path: /lovelace/mousserende/
+                  - type: markdown
+                    content: >
+                      <table width="100%">
+                      <tr><td><font size="5"><center>{{states("sensor.ct_sparkling")}} flasker</center></font></td></tr>
+                      </table>
+
+              - type: custom:vertical-stack-in-card
+                #title: My Card
+                cards:
+                  - type: picture
+                    image: /local/CT_winelist_gfx/dessertvin.png
+                    tap_action:
+                      action: navigate
+                      navigation_path: /lovelace/dessert/
+                  - type: markdown
+                    content: >
+                      <table width="100%">
+                      <tr><td><font size="5"><center>{{states("sensor.ct_fortified")}} flasker</center></font></td></tr>
+                      </table>
+
+              - type: custom:vertical-stack-in-card
+                #title: My Card
+                cards:
+                  - type: picture
+                    image: /local/CT_winelist_gfx/andet.png
+                    tap_action:
+                      action: navigate
+                      navigation_path: /lovelace/other/
+                  - type: markdown
+                    content: >
+                      <table width="100%">
+                      <tr><td><font size="5"><center>{{states("sensor.ct_other")}} flasker</center></font></td></tr>
+                      </table>
+
+              - type: custom:gap-card
+
+  - title: Rødvin
+    path: redwine
+    subview: true
+    panel: true
+    cards:
+      - type: "custom:flex-table-card"
+        entities:
+          include: sensor.ct_red
+        columns:
+          - name: Navn
+            modify: x.Wine
+            data: Data
+          - name: Drue
+            modify: x.Varietal
+            data: Data
+          - name: Antal
+            modify: x.Quantity
+            data: Data
+          - name: Land
+            modify: x.Country
+            data: Data
+          - name: Årgang
+            modify: '(x.Vintage == "1001") ? "" : x.Vintage'
+            data: Data
+          - name: Pris
+            modify: x.Price
+            data: Data
+          - name: Score
+            modify: '(x.CT == "0") ? "-" : x.CT'
+            data: Data
+          - name: Start
+            modify: '(x.BeginConsume == "0") ? "-" : x.BeginConsume'
+            data: Data
+          - name: Slut
+            modify: '(x.EndConsume == "0") ? "-" : x.EndConsume'
+            data: Data
+          - name: Placering
+            modify: x.Location
+            data: Data
+
+  - title: Hvidvin
+    path: whitewine
+    subview: true
+    panel: true
+    cards:
+      - type: "custom:flex-table-card"
+        entities:
+          include: sensor.ct_white
+        columns:
+          - name: Navn
+            modify: x.Wine
+            data: Data
+          - name: Drue
+            modify: x.Varietal
+            data: Data
+          - name: Antal
+            modify: x.Quantity
+            data: Data
+          - name: Land
+            modify: x.Country
+            data: Data
+          - name: Årgang
+            modify: '(x.Vintage == "1001") ? "" : x.Vintage'
+            data: Data
+          - name: Pris
+            modify: x.Price
+            data: Data
+          - name: Score
+            modify: '(x.CT == "0") ? "-" : x.CT'
+            data: Data
+          - name: Start
+            modify: '(x.BeginConsume == "0") ? "-" : x.BeginConsume'
+            data: Data
+          - name: Slut
+            modify: '(x.EndConsume == "0") ? "-" : x.EndConsume'
+            data: Data
+          - name: Placering
+            modify: x.Location
+            data: Data
+
+  - title: Rosévin
+    path: rosewine
+    subview: true
+    panel: true
+    cards:
+      - type: "custom:flex-table-card"
+        entities:
+          include: sensor.ct_rose
+        columns:
+          - name: Navn
+            modify: x.Wine
+            data: Data
+          - name: Drue
+            modify: x.Varietal
+            data: Data
+          - name: Antal
+            modify: x.Quantity
+            data: Data
+          - name: Land
+            modify: x.Country
+            data: Data
+          - name: Årgang
+            modify: '(x.Vintage == "1001") ? "" : x.Vintage'
+            data: Data
+          - name: Pris
+            modify: x.Price
+            data: Data
+          - name: Score
+            modify: '(x.CT == "0") ? "-" : x.CT'
+            data: Data
+          - name: Start
+            modify: '(x.BeginConsume == "0") ? "-" : x.BeginConsume'
+            data: Data
+          - name: Slut
+            modify: '(x.EndConsume == "0") ? "-" : x.EndConsume'
+            data: Data
+          - name: Placering
+            modify: x.Location
+            data: Data
+
+  - title: Mousserende
+    path: mousserende
+    subview: true
+    panel: true
+    cards:
+      - type: "custom:flex-table-card"
+        entities:
+          include: sensor.CT_sparkling
+        columns:
+          - name: Navn
+            modify: x.Wine
+            data: Data
+          - name: Drue
+            modify: x.Varietal
+            data: Data
+          - name: Antal
+            modify: x.Quantity
+            data: Data
+          - name: Land
+            modify: x.Country
+            data: Data
+          - name: Årgang
+            modify: '(x.Vintage == "1001") ? "" : x.Vintage'
+            data: Data
+          - name: Pris
+            modify: x.Price
+            data: Data
+          - name: Score
+            modify: '(x.CT == "0") ? "-" : x.CT'
+            data: Data
+          - name: Start
+            modify: '(x.BeginConsume == "0") ? "-" : x.BeginConsume'
+            data: Data
+          - name: Slut
+            modify: '(x.EndConsume == "0") ? "-" : x.EndConsume'
+            data: Data
+          - name: Placering
+            modify: x.Location
+            data: Data
+
+  - title: Dessert
+    path: dessert
+    subview: true
+    panel: true
+    cards:
+      - type: "custom:flex-table-card"
+        entities:
+          include: sensor.CT_fortified
+        columns:
+          - name: Navn
+            modify: x.Wine
+            data: Data
+          - name: Drue
+            modify: x.Varietal
+            data: Data
+          - name: Antal
+            modify: x.Quantity
+            data: Data
+          - name: Land
+            modify: x.Country
+            data: Data
+          - name: Årgang
+            modify: '(x.Vintage == "1001") ? "" : x.Vintage'
+            data: Data
+          - name: Pris
+            modify: x.Price
+            data: Data
+          - name: Score
+            modify: '(x.CT == "0") ? "-" : x.CT'
+            data: Data
+          - name: Start
+            modify: '(x.BeginConsume == "0") ? "-" : x.BeginConsume'
+            data: Data
+          - name: Slut
+            modify: '(x.EndConsume == "0") ? "-" : x.EndConsume'
+            data: Data
+          - name: Placering
+            modify: x.Location
+            data: Data
+
+  - title: Andet
+    path: other
+    subview: true
+    panel: true
+    cards:
+      - type: "custom:flex-table-card"
+        entities:
+          include: sensor.ct_other
+        columns:
+          - name: Navn
+            modify: x.Wine
+            data: Data
+          - name: Drue
+            modify: x.Varietal
+            data: Data
+          - name: Antal
+            modify: x.Quantity
+            data: Data
+          - name: Land
+            modify: x.Country
+            data: Data
+          - name: Årgang
+            modify: '(x.Vintage == "1001") ? "" : x.Vintage'
+            data: Data
+          - name: Pris
+            modify: x.Price
+            data: Data
+          - name: Score
+            modify: '(x.CT == "0") ? "-" : x.CT'
+            data: Data
+          - name: Start
+            modify: '(x.BeginConsume == "0") ? "-" : x.BeginConsume'
+            data: Data
+          - name: Slut
+            modify: '(x.EndConsume == "0") ? "-" : x.EndConsume'
+            data: Data
+          - name: Placering
+            modify: x.Location
+            data: Data

@@ -1,0 +1,18 @@
+{
+  "domain": "CT_winelist",
+  "name": "CellarTracker Winelist",
+  "documentation": "https://github.com/MSkeem/CellarTracker-for-Home-Assistant/",
+  "issues": "https://github.com/MSkeem/CellarTracker-for-Home-Assistant/issues",
+  "dependencies": [
+    "sensor"
+  ],
+  "version": "1.0.0",
+  "codeowners": [
+    "@MSkeem"
+  ],
+  "requirements": [
+    "cellartracker"
+  ],
+  "quality_scale": "internal",
+  "iot_class": "Cloud Polling"
+}
