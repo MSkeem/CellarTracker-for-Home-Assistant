@@ -17,13 +17,19 @@ The integration generates the following entities which represent categories of w
 - `CT_total`: Contains the total number of bottles, their combined price and the average price per bottle.
 
 ## Installation:
-
-
-First, download the `CT_winelist` directory from this repository and add it to your `custom_component` directory in Home Assistant<br>
+Do either 1.a. or 1.b.:<br>
 <br>
+**1.a. (the easy wat):**<br>
+Add the integration through HACS under Custom Integration:<br>
+Repository: https://github.com/MSkeem/CellarTracker-for-Home-Assistant<br>
+Category: Integration<br>
+<br>
+**1.b.:**<br>
+First, download the `CT_winelist` directory from this repository and add it to your `custom_component` directory in Home Assistant<br>
 <b>Restart home assistant.</b>
-
-Next, add the following to your `configuration.yaml` file:
+<br>
+**2.**<br>
+And when you have done either 1.a. or 1.b. you should add the following to your `configuration.yaml` file:
 
 ```yaml
 sensor:
@@ -31,7 +37,11 @@ sensor:
     username: !secret CT_winelist_username  
     password: !secret CT_winelist_password  
 ```
-Ensure your CellarTracker username and password are correctly entered in the `secrets.yaml` file.<br>
+Add your CellarTracker username and password in the `secrets.yaml` file:<br>
+```yaml
+CT_winelist_username: your_username
+CT_winelist_password: your_password
+```
 <br>
 <b>Restart home assistant.</b>
 
