@@ -13,7 +13,11 @@ The integration generates the following entities which represent categories of w
 
 ## Installation:
 
-To install this integration, add the following to your `configuration.yaml` file, ensuring your CellarTracker username and password are correctly entered in the `secrets.yaml` file:
+
+First, download the `CT_winelist` directory from this repository and add it to your `custom_component` directory in Home Assistant<br>
+<b>Restart home assistant.</b>
+
+Next, add the following to your `configuration.yaml` file, ensuring your CellarTracker username and password are correctly entered in the `secrets.yaml` file:
 
 ```yaml
 sensor:
@@ -21,7 +25,6 @@ sensor:
     username: !secret CT_winelist_username  
     password: !secret CT_winelist_password  
 ```
-Next, download the `CT_winelist` directory from this repository and add it to your `custom_component` directory in Home Assistant.
 
 ## Customizing Lovelace:
 
