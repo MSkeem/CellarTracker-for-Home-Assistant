@@ -18,7 +18,7 @@ First, download the `CT_winelist` directory from this repository and add it to y
 <br>
 <b>Restart home assistant.</b>
 
-Next, add the following to your `configuration.yaml` file, ensuring your CellarTracker username and password are correctly entered in the `secrets.yaml` file:
+Next, add the following to your `configuration.yaml` file:
 
 ```yaml
 sensor:
@@ -26,6 +26,7 @@ sensor:
     username: !secret CT_winelist_username  
     password: !secret CT_winelist_password  
 ```
+Ensure your CellarTracker username and password are correctly entered in the `secrets.yaml` file.<br>
 <br>
 <b>Restart home assistant.</b>
 
