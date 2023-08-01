@@ -4,7 +4,7 @@
   <img src="https://github.com/MSkeem/CellarTracker-for-Home-Assistant/blob/main/img/ct_logo.png" alt="CellarTracker logo" width="25%"/>
 </p>
 
-This custom integration that enables you to seamlessly import your wine collections from CellarTracker into Home Assistant.
+This custom integration enables you to seamlessly import your wine collections from CellarTracker into Home Assistant.
 
 The integration generates the following distinct entities, each representing a category of wine as opposed to individual bottles:
 
