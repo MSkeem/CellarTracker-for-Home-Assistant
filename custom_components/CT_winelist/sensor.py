@@ -1,4 +1,6 @@
 import pandas as pd
+import numpy as np
+
 from homeassistant.helpers.entity import Entity
 from homeassistant.util import Throttle
 from datetime import timedelta
@@ -7,7 +9,6 @@ import logging
 from cellartracker import cellartracker
 
 _LOGGER = logging.getLogger(__name__)
-#FILE_PATH = "/config/www/winelistdf.txt"
 
 username = None
 password = None
@@ -26,18 +27,10 @@ async def async_get_data(hass):
     inventory_list = await hass.async_add_executor_job(client.get_inventory)
     df = pd.DataFrame(inventory_list)
 
-    #df = pd.read_csv(FILE_PATH, usecols=columns)
-
     df = df.reindex(columns=columns)
     df['Quantity'] = df.groupby('iWine')['iWine'].transform('count')
     df = df.drop_duplicates(subset='iWine').drop(columns='iWine')
-    df['CT'] = pd.to_numeric(df['CT'], errors='coerce')
-    df['CT'] = df['CT'].fillna(0).round(1)
-    df['BeginConsume'] = pd.to_numeric(df['BeginConsume'], errors='coerce')
-    df['BeginConsume'] = df['BeginConsume'].fillna(0).astype(int)
-    df['EndConsume'] = pd.to_numeric(df['EndConsume'], errors='coerce')
-    df['EndConsume'] = df['EndConsume'].fillna(0).astype(int)
-    df['Price'] = pd.to_numeric(df['Price'], errors='coerce')
+
     # Add 'CT_' prefix to 'Type' column
     df['Type'] = 'CT_' + df['Type']
 
@@ -48,13 +41,42 @@ async def async_get_data(hass):
     df.loc[~df['Group'].isin(['CT_Red', 'CT_White', 'CT_Rosé', 'CT_Sparkling', 'CT_Fortified']), 'Group'] = 'CT_Other'
     df = df.drop(columns='Type')
     df = df.rename(columns={'Group': 'Type'})
+        
+    # Excluding 'iWine' from the columns to iterate over since it has been dropped
+    iter_columns = [col for col in columns if col != 'iWine']
+    #checking if some of the groups are empty and if so, fill one row with data (no data if string and zero if number)
+    required_types = ['CT_Red', 'CT_White', 'CT_Rosé', 'CT_Sparkling', 'CT_Fortified', 'CT_Other']
+    for req_type in required_types:
+        if req_type not in df['Type'].values:
+            blank_row = {}
+            for col in iter_columns:
+                if col == 'Type':
+                    blank_row[col] = req_type
+                elif col == 'Quantity' or np.issubdtype(df[col].dtype, np.number):
+                    blank_row[col] = 0  # Filling numeric columns with 0
+                else:
+                    blank_row[col] = 'No data'  # Filling non-numeric columns with "No data"
+            blank_row_df = pd.DataFrame([blank_row])
+            df = pd.concat([df, blank_row_df], ignore_index=True) #merge new blank rows with cellartracker
+
+    #fix potential numbering problems
+    df['Price'] = pd.to_numeric(df['Price'], errors='coerce')
+    df['Quantity'] = df['Quantity'].fillna(0)
+    df['Quantity'] = pd.to_numeric(df['Quantity'], errors='coerce')
+    df['Quantity'] = df['Quantity'].astype(int) 
+    df['CT'] = pd.to_numeric(df['CT'], errors='coerce')
+    df['CT'] = df['CT'].fillna(0).round(1)
+    df['BeginConsume'] = pd.to_numeric(df['BeginConsume'], errors='coerce')
+    df['BeginConsume'] = df['BeginConsume'].fillna(0).astype(int)
+    df['EndConsume'] = pd.to_numeric(df['EndConsume'], errors='coerce')
+    df['EndConsume'] = df['EndConsume'].fillna(0).astype(int)
 
     total_bottles = df['Quantity'].sum()
     total_price = (df['Quantity'] * df['Price']).sum()
     average_price = float(total_price) / float(total_bottles) if total_bottles else 0
     grouped = df.groupby('Type')
     return total_bottles, total_price, average_price, grouped
-
+    
 async def async_update_data(hass, now=None):
     """Update the global data."""
     global data
