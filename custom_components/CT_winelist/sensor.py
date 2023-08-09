@@ -27,7 +27,11 @@ async def async_get_data(hass):
     inventory_list = await hass.async_add_executor_job(client.get_inventory)
     df = pd.DataFrame(inventory_list)
 
-    df = df.reindex(columns=columns)
+    #If no price for a wine in a group of wines, then add the max price to all wines in the group 
+    df['Price'] = pd.to_numeric(df['Price'], errors='coerce').fillna(0)
+    df['Price'] = df.groupby('iWine')['Price'].apply(lambda group: group.replace(0, group[group > 0].max()).fillna(group[group > 0].max())).reset_index(level=0, drop=True)
+    
+    #count the same wine and group them
     df['Quantity'] = df.groupby('iWine')['iWine'].transform('count')
     df = df.drop_duplicates(subset='iWine').drop(columns='iWine')
 
@@ -60,17 +64,12 @@ async def async_get_data(hass):
             df = pd.concat([df, blank_row_df], ignore_index=True) #merge new blank rows with cellartracker
 
     #fix potential numbering problems
-    df['Price'] = pd.to_numeric(df['Price'], errors='coerce')
-    df['Quantity'] = df['Quantity'].fillna(0)
-    df['Quantity'] = pd.to_numeric(df['Quantity'], errors='coerce')
-    df['Quantity'] = df['Quantity'].astype(int) 
-    df['CT'] = pd.to_numeric(df['CT'], errors='coerce')
-    df['CT'] = df['CT'].fillna(0).round(1)
-    df['BeginConsume'] = pd.to_numeric(df['BeginConsume'], errors='coerce')
-    df['BeginConsume'] = df['BeginConsume'].fillna(0).astype(int)
-    df['EndConsume'] = pd.to_numeric(df['EndConsume'], errors='coerce')
-    df['EndConsume'] = df['EndConsume'].fillna(0).astype(int)
+    df['Quantity'] = pd.to_numeric(df['Quantity'], errors='coerce').fillna(0).astype(int)
+    df['CT'] = pd.to_numeric(df['CT'], errors='coerce').fillna(0).round(1)
+    df['BeginConsume'] = pd.to_numeric(df['BeginConsume'], errors='coerce').fillna(0).astype(int)
+    df['EndConsume'] = pd.to_numeric(df['EndConsume'], errors='coerce').fillna(0).astype(int)
 
+    #data for the total-entity
     total_bottles = df['Quantity'].sum()
     total_price = (df['Quantity'] * df['Price']).sum()
     average_price = float(total_price) / float(total_bottles) if total_bottles else 0
