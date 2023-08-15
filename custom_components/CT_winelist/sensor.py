@@ -74,7 +74,30 @@ async def async_get_data(hass):
     total_price = (df['Quantity'] * df['Price']).sum()
     average_price = float(total_price) / float(total_bottles) if total_bottles else 0
     grouped = df.groupby('Type')
-    return total_bottles, total_price, average_price, grouped
+
+    # Create a DataFrame with all required types and initialize total and average prices to 0
+    required_totals_init = pd.DataFrame({
+        'Type': required_types,
+        'total_price': 0,
+        'average_price': 0
+    })
+
+    totals = df[df['Type'].isin(required_types)].groupby('Type').apply(
+        lambda group: pd.Series({
+            'total_price': (group['Quantity'] * group['Price']).sum(),
+            'average_price': round((group['Quantity'] * group['Price']).sum() / group['Quantity'].sum()) if group['Quantity'].sum() else 0
+        })
+    ).reset_index()
+
+    total_row = pd.DataFrame({
+        'Type': ['Total'],
+        'total_price': [total_price],
+        'average_price': [average_price]
+    })
+
+    # Append this row to the calculated totals DataFrame
+    totals = pd.concat([totals, total_row], ignore_index=True)
+    return total_bottles, totals, grouped
     
 async def async_update_data(hass, now=None):
     """Update the global data."""
@@ -86,9 +109,9 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     username = config.get('username')
     password = config.get('password')
     data = await async_get_data(hass)
-    total_bottles, total_price, average_price, grouped = data
+    total_bottles, totals, grouped = data
     entities = [CTwineSensor(hass, name, group) for name, group in grouped]
-    entities.append(CTtotalSensor(hass, 'CT_total', total_bottles, total_price, average_price))
+    entities.append(CTtotalSensor(hass, 'CT_total', total_bottles, totals))
     async_add_entities(entities)
 
     async def interval_callback(now):
@@ -126,7 +149,7 @@ class CTwineSensor(Entity):
         global data
         #_LOGGER.info(f"Type of hass in async_get_data: {type(self._hass)}")
         #_LOGGER.info(f"Updating {self._unique_id} at {now}")
-        total_bottles, total_price, average_price, grouped = data
+        total_bottles, totals, grouped = data
         #if self._type not in grouped.groups:
         #    _LOGGER.error(f"Group '{self._type}' not found in dataframe")
         #    return
@@ -135,11 +158,29 @@ class CTwineSensor(Entity):
         self._attributes = group.to_dict(orient='records')
 
 class CTtotalSensor(Entity):
-    def __init__(self, hass, name, total_bottles, total_price, average_price):
+    def __init__(self, hass, name, total_bottles, totals):
         self._hass = hass
         self._name = name
         self._state = int(total_bottles)
-        self._attributes = {'Total Price': int(total_price), 'Average Price': int(average_price)}
+
+        # Initialize the attributes dictionary
+        attributes = {}
+        
+        # Add the total price and average price for each required type
+        for index, row in totals.iterrows():
+            type_name = row['Type']
+            if type_name == 'Total':
+                attributes['Total Price'] = int(row['total_price'])
+                attributes['Average Price'] = int(row['average_price'])
+            else:
+                attributes[f'{type_name} Total Price'] = int(row['total_price'])
+                attributes[f'{type_name} Average Price'] = int(row['average_price'])
+
+        
+        # Assign the attributes dictionary to self._attributes
+        self._attributes = attributes
+        
+        #self._attributes = {'Total Price': int(total_price), 'Average Price': int(average_price)}
         self._unique_id = f"winelist_{self._name}"
 
     @property
@@ -162,6 +203,16 @@ class CTtotalSensor(Entity):
         global data
         #_LOGGER.info(f"Type of hass in async_get_data: {type(self._hass)}")
         #_LOGGER.info(f"Updating {self._unique_id} at {now}")
-        total_bottles, total_price, average_price, grouped = data
+        total_bottles, totals, grouped = data
         self._state = int(total_bottles)
-        self._attributes = {'Total Price': int(total_price), 'Average Price': int(average_price)}
+
+        attributes = {}
+        # Add the total price and average price for each required type
+        for index, row in totals.iterrows():
+            type_name = row['Type']
+            if type_name == 'Total':
+                attributes['Total Price'] = int(row['total_price'])
+                attributes['Average Price'] = int(row['average_price'])
+            else:
+                attributes[f'{type_name} Total Price'] = int(row['total_price'])
+                attributes[f'{type_name} Average Price'] = int(row['average_price'])
