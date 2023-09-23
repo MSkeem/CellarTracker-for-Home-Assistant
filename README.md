@@ -36,8 +36,8 @@ sensor:
     username: !secret CT_winelist_username  
     password: !secret CT_winelist_password  
 ```
-### Database Management Note
 
+**Database management note:**<br>
 Wine details are stored as entity attributes. To avoid database overload and warnings from Home Assistant, consider excluding these entities from the recorder. Update the `recorder` section in your `configuration.yaml` as follows:
 
 ```yaml
@@ -52,8 +52,7 @@ recorder:
       - sensor.ct_white
 ```
 
-### Username and password for CellerTracker
-
+**Username and password for CellarTracker:**<br>
 Include your CellarTracker username and password in the `secrets.yaml` file as shown:
 
 ```yaml
