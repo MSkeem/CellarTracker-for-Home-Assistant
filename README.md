@@ -52,6 +52,8 @@ recorder:
       - sensor.ct_white
 ```
 
+### Username and password for CellerTracker
+
 Include your CellarTracker username and password in the `secrets.yaml` file as shown:
 
 ```yaml
